@@ -2,7 +2,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import { mongoConnection } from "./mongoose.config.js";
 import authRoutes from "./routes/user.route.js";
-import bookRoutes from "./routes/book.route.js";
 import creditRoutes from "./routes/credit.route.js";
 import providerRoutes from "./routes/provider.route.js";
 import { authorize } from "./auth.middelwere.js";
@@ -19,7 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 mongoConnection();
 app.use("/api/auth", authRoutes);
-app.use("/api/books", authorize, bookRoutes);
 app.use("/api/credits", authorize,userIsAdmin, creditRoutes);
 app.use("/api/providers",authorize, providerRoutes);
 

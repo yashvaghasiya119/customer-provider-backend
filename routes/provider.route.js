@@ -1,8 +1,8 @@
 import express from "express";
-import { getProviderWithRange } from "../controller/provider.controller.js";
+import { findProvider } from "../controller/provider.controller.js";
 
 const router = express.Router();
 
-router.get("/nearprovider", getProviderWithRange);
+router.get("/findprovider", findProvider);
 
 export default router;

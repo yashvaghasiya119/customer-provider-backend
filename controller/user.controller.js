@@ -2,7 +2,6 @@ import {userModel} from "../model/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
-import { bookModel } from "../model/book.model.js";
 
 export const signup = async (req, res) => {
   try {
@@ -74,44 +73,18 @@ export const signup = async (req, res) => {
   }
 };
 
-// export const allUser = async (req, res) => {
-//   try {
-//     const users = await userModel.find().select("-password").populate("books", "title author publishedDate genre price createdAt");
-//     res.status(200).json({
-//       message: "Users retrieved successfully",
-//       users,
-//     });
-//   } catch (error) {
-//     console.error("Error fetching users:", error);
-//     res.status(500).json({
-//       message: "Server error",
-//     });
-//   }
-// }
 
 export const allUser = async (req, res) => {
   try {
     // Fetch users without passwords
     const users = await userModel.find().select("-password");
 
-    // For each user, fetch their books and include them
-    const usersWithBooks = await Promise.all(
-      users.map(async (user) => {
-        // Fetch the books that belong to this user
-        const books = await bookModel.find({ user: user._id })
-          .select("title author publishedDate genre price createdAt");
-
-        return {
-          ...user.toObject(),
-          books, // Add the books to the user object
-        };
-      })
-    );
+    
 
     // Return the response
     res.status(200).json({
       message: "Users retrieved successfully",
-      users: usersWithBooks,
+      users: users,
     });
   } catch (error) {
     console.error("Error fetching users:", error);

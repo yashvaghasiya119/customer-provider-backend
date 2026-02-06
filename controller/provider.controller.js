@@ -3,10 +3,7 @@ import { userModel } from "../model/user.model.js";
 import timingData from "../timing.json" assert { type: "json" };
 
 
-
-
-
-export const getProviderWithRange = async (req, res) => {
+export const findProvider = async (req, res) => {
   try {
     const { latitude, longitude, rangeKm, providerType } = req.body;
 
