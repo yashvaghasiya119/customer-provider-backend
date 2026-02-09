@@ -79,12 +79,37 @@ const userSchema = new mongoose.Schema(
         return this.role === "provider";
       },
     },
-  //  isBlocked: {
-  //     type: Boolean,
-  //     default: false,
-  //   },
-  },
-  { timestamps: true }
+   isBlocked: {
+      type: Boolean,
+      default: false,
+    },
+    isAvailable: {
+      type: Boolean,
+      default: function() {
+        return this.role === "provider";
+      },
+    },
+    lastActive: {
+      type: Date,
+      default: function() {
+        return this.role === "provider" ? Date.now() : undefined;
+      },
+    },
+    averageRating: {
+      type: Number,
+      default: function() {
+        return this.role === "provider" ? 0 : undefined;
+      },
+    },
+    totalRatings: {
+      type: Number,
+      default: function() {
+        return this.role === "provider" ? 0 : undefined;
+      },
+    }
+    
+},
+ { timestamps: true }
 );
 
 export const userModel = mongoose.model("User", userSchema);
